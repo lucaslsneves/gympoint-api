@@ -1,11 +1,11 @@
 import { Model, DataTypes } from 'sequelize';
 
-class Student extends Model {
+class Plan extends Model {
   static init(sequelize) {
     super.init(
       {
         title: DataTypes.STRING,
-        dutation: DataTypes.INTEGER,
+        duration: DataTypes.INTEGER,
         price: DataTypes.DECIMAL(10, 2),
       },
       {
@@ -16,4 +16,4 @@ class Student extends Model {
   }
 }
 
-export default Student;
+export default Plan;
