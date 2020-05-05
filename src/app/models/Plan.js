@@ -7,6 +7,7 @@ class Plan extends Model {
         title: DataTypes.STRING,
         duration: DataTypes.INTEGER,
         price: DataTypes.DECIMAL(10, 2),
+        canceled_at: DataTypes.DATE,
       },
       {
         sequelize,

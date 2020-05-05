@@ -74,5 +74,23 @@ export default {
     return res.json(plan);
   },
 
-  async delete(req, res) {},
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const plan = await Plan.findByPk(id);
+
+    if (!plan) {
+      return res.status(400).json({ error: 'This plan doesnt exists' });
+    }
+
+    if (plan.canceled_at) {
+      return res.status(400).json({ error: 'This plan was canceled already' });
+    }
+
+    plan.canceled_at = new Date();
+
+    await plan.save();
+
+    return res.json();
+  },
 };
