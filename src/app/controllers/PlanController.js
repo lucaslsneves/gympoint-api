@@ -44,7 +44,35 @@ export default {
     return res.json(plan);
   },
 
-  async update(req, res) {},
+  async update(req, res) {
+    const keys = Object.entries(req.body);
+
+    if (!keys.length) {
+      return res.json({ error: 'You need to change at least 1 field' });
+    }
+
+    const { id } = req.params;
+
+    const plan = await Plan.findByPk(id);
+
+    if (!plan) {
+      return res.status(400).json({ error: 'This plan doesnt exists' });
+    }
+
+    const schema = Yup.object().shape({
+      title: Yup.string(),
+      duration: Yup.number().positive().integer(),
+      price: Yup.number().positive(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    await plan.update(req.body);
+
+    return res.json(plan);
+  },
 
   async delete(req, res) {},
 };
