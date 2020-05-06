@@ -3,7 +3,7 @@
 </h1>
 
 <h3 align="center">
-  Desafio da Rocketseat, para construir o sistema de uma Academia
+  Desafio para construir o sistema de uma Academia
 </h3>
 
 
