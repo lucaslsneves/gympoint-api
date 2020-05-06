@@ -3,10 +3,10 @@
 </h1>
 
 <h3 align="center">
-  Desafio para construir o sistema de uma Academia
+  Desafio para construir o sistema gerenciador de uma Academia
 </h3>
 
-<p align="center">Para ver o que foi pedido para ser feito no desafio clique no link <a  href="https://github.com/lucasluz99/gympoint-challenges" target="__blank">Gympoint Challenges</a>
+<p align="center">Para ver o que foi pedido para ser feito no desafio clique no link <a  href="https://github.com/lucasluz99/gympoint-challenges">Gympoint Challenges</a>
 </p>
 
 
