@@ -6,6 +6,7 @@
   Desafio para construir o sistema de uma Academia
 </h3>
 
-<p>Para ver o que foi pedido para ser feito no desafio clique no link</p>
+<p align="center">Para ver o que foi pedido para ser feito no desafio clique no link <a  href="https://github.com/lucasluz99/gympoint-challenges" target="__blank">Gympoint Challenges</a>
+</p>
 
-<a  href="https://github.com/lucasluz99/gympoint-challenges" target="_blank">Gympoint Challenges</a>
+
