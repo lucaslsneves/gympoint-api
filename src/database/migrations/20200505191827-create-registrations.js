@@ -10,7 +10,7 @@ module.exports = {
       student_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'users', key: 'id' },
+        references: { model: 'students', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
       },
@@ -20,6 +20,10 @@ module.exports = {
         references: { model: 'plans', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'RESTRICT',
+      },
+      price: {
+        type: Sequelize.DECIMAL(10, 2),
+        allowNull: false,
       },
       start_date: {
         type: Sequelize.DATE,

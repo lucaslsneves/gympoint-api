@@ -6,6 +6,7 @@ class Registration extends Model {
       {
         student_id: DataTypes.INTEGER,
         plan_id: DataTypes.INTEGER,
+        price: DataTypes.DECIMAL(10, 2),
         start_date: DataTypes.DATE,
         end_date: DataTypes.DATE,
       },
