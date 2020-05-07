@@ -155,5 +155,17 @@ export default {
     return res.json(registration);
   },
 
-  async delete(req, res) {},
+  async delete(req, res) {
+    const { id } = req.params;
+
+    const registration = await Registration.findByPk(id);
+
+    if (!registration) {
+      return res.status(400).json({ error: 'This registration doesnt exists' });
+    }
+
+    await registration.destroy();
+
+    return res.json();
+  },
 };
