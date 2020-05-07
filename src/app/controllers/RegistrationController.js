@@ -1,8 +1,11 @@
 import * as Yup from 'yup';
-import { isBefore, addMonths, parseISO, isEqual } from 'date-fns';
+import { isBefore, addMonths, parseISO } from 'date-fns';
+
 import Registration from '../models/Registration';
 import Plan from '../models/Plan';
 import Student from '../models/Student';
+
+import Queue from '../lib/Queue';
 
 export default {
   async index(req, res) {
@@ -79,6 +82,8 @@ export default {
       start_date,
       end_date,
     });
+
+    await Queue.add({ student });
 
     return res.json(registration);
   },
