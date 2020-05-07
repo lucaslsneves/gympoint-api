@@ -5,6 +5,8 @@ import Registration from '../models/Registration';
 import Plan from '../models/Plan';
 import Student from '../models/Student';
 
+import RegistrationMail from '../jobs/RegistrationMail';
+
 import Queue from '../lib/Queue';
 
 export default {
@@ -83,7 +85,7 @@ export default {
       end_date,
     });
 
-    await Queue.add({ student });
+    await Queue.add(RegistrationMail.key, { student });
 
     return res.json(registration);
   },
