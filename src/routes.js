@@ -6,7 +6,7 @@ import PlanController from './app/controllers/PlanController';
 import RegistrationController from './app/controllers/RegistrationController';
 import CheckinController from './app/controllers/CheckinController';
 import HelpOrderController from './app/controllers/HelpOrderController';
-import UnresolvedQuestionController from './app/controllers/UnresolvedQuestion.js';
+import UnresolvedQuestionController from './app/controllers/UnresolvedQuestionController';
 
 import authMiddleware from './app/middlewares/auth';
 
