@@ -7,7 +7,7 @@ class HelpOrder extends Model {
         student_id: DataTypes.INTEGER,
         question: DataTypes.STRING,
         answer: DataTypes.STRING,
-        answer_at: DataTypes.STRING,
+        answer_at: DataTypes.DATE,
       },
       {
         sequelize,

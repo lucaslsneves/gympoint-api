@@ -14,7 +14,7 @@ export default {
     });
 
     const { id } = req.params;
-    const { question } = req.body;
+    const { answer } = req.body;
 
     const [paramIsValid, bodyIsValid] = await Promise.all([
       paramSchema.isValid({ id }),
@@ -25,16 +25,14 @@ export default {
       return res.status(400).json({ error: 'Validation fails' });
     }
 
-    const student = await Student.findByPk(id);
+    const helpOrder = await HelpOrder.findByPk(id);
 
-    if (!student) {
+    if (!helpOrder) {
       return res.status(400).json({ error: 'This student doesnt exists' });
     }
 
-    const helpOrder = await HelpOrder.create({
-      student_id: id,
-      question,
-    });
+    helpOrder.answer_at = new Date();
+    helpOrder.answer = answer;
 
     return res.json(helpOrder);
   },

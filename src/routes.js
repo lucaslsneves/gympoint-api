@@ -7,6 +7,7 @@ import RegistrationController from './app/controllers/RegistrationController';
 import CheckinController from './app/controllers/CheckinController';
 import HelpOrderController from './app/controllers/HelpOrderController';
 import UnresolvedQuestionController from './app/controllers/UnresolvedQuestionController';
+import AnswerHelpOrderController from './app/controllers/AnswerHelpOrderController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -36,4 +37,7 @@ routes.put('/registrations/:id', RegistrationController.update);
 routes.delete('/registrations/:id', RegistrationController.delete);
 
 routes.get('/unresolved-questions', UnresolvedQuestionController.index);
+
+routes.post('/help-orders/:id/answer', AnswerHelpOrderController.store);
+
 export default routes;
