@@ -6,6 +6,7 @@ import PlanController from './app/controllers/PlanController';
 import RegistrationController from './app/controllers/RegistrationController';
 import CheckinController from './app/controllers/CheckinController';
 import HelpOrderController from './app/controllers/HelpOrderController';
+import UnresolvedQuestionController from './app/controllers/UnresolvedQuestion.js';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -34,4 +35,5 @@ routes.post('/registrations', RegistrationController.store);
 routes.put('/registrations/:id', RegistrationController.update);
 routes.delete('/registrations/:id', RegistrationController.delete);
 
+routes.get('/unresolved-questions', UnresolvedQuestionController.index);
 export default routes;
