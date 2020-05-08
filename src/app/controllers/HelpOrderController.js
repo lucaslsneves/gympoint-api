@@ -39,5 +39,42 @@ export default {
     return res.json(helpOrder);
   },
 
-  async index(req, res) {},
+  async index(req, res) {
+    const { id } = req.params;
+
+    const paramSchema = Yup.object().shape({
+      id: Yup.number().positive().required(),
+    });
+
+    if (!(await paramSchema.isValid({ id }))) {
+      return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    const student = await Student.findByPk(id);
+
+    if (!student) {
+      return res.status(400).json({ error: 'This student doesnt exists' });
+    }
+
+    const { page = 1 } = req.query;
+    const limit = 10;
+
+    const helpOrders = await HelpOrder.findAll({
+      where: {
+        student_id: id,
+      },
+      include: [
+        {
+          model: Student,
+          as: 'student',
+          attributes: ['name', 'email'],
+        },
+      ],
+      order: [['created_at', 'DESC']],
+      offset: (page - 1) * limit,
+      limit,
+    });
+
+    return res.json(helpOrders);
+  },
 };
