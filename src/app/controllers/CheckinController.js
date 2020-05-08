@@ -35,5 +35,34 @@ export default {
     return res.json(checkin);
   },
 
-  async index(req, res) {},
+  async index(req, res) {
+    const { id: student_id } = req.params;
+
+    const student = await Student.findByPk(student_id);
+
+    if (!student) {
+      return res.status(400).json({ error: 'This student doesnt exists' });
+    }
+
+    const { page = 1 } = req.query;
+    const limit = 10;
+
+    const checkins = await Checkin.findAll({
+      where: {
+        student_id,
+      },
+      order: [['created_at', 'DESC']],
+      include: [
+        {
+          model: Student,
+          attributes: ['name'],
+          as: 'student',
+        },
+      ],
+      offset: (page - 1) * limit,
+      limit,
+    });
+
+    return res.json(checkins);
+  },
 };
