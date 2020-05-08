@@ -10,7 +10,8 @@ export default {
       from: 'Queue Test <queue@queueteste.com>',
       to: `${student.name} <${student.email}>`,
       subject: 'Cadastro de usuário',
-      html: `Olá, ${student.name},bem-vindo a Gympoint <br/>
+      html: `
+      Olá, ${student.name},bem-vindo a Gympoint <br/>
       Data de início do plano: ${format(
         parseISO(registration.start_date),
         `dd/MM/yyyy`

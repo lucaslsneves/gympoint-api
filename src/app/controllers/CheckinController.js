@@ -55,7 +55,7 @@ export default {
       include: [
         {
           model: Student,
-          attributes: ['name', 'email'],
+          attributes: ['name'],
           as: 'student',
         },
       ],
