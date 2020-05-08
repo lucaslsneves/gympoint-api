@@ -85,7 +85,7 @@ export default {
       end_date,
     });
 
-    await Queue.add(RegistrationMail.key, { student });
+    await Queue.add(RegistrationMail.key, { student, registration });
 
     return res.json(registration);
   },
