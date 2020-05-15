@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import * as Yup from 'yup';
 import { isBefore, addMonths, parseISO } from 'date-fns';
 
@@ -11,24 +12,21 @@ import Queue from '../lib/Queue';
 
 export default {
   async index(req, res) {
-    const { id } = req.query;
+    const { page = 1, perPage = 10, name = '' } = req.query;
 
-    if (id) {
-      const registration = await Registration.findByPk(id);
-
-      if (!registration) {
-        return res
-          .status(400)
-          .json({ error: 'This registration doesnt exists' });
-      }
-
-      return res.json(registration);
-    }
     const registrations = await Registration.findAll({
+      where: {
+        '$student.name$': {
+          [Op.iLike]: `%${name}%`,
+        },
+      },
       include: [
         { model: Student, as: 'student', attributes: ['name'] },
         { model: Plan, as: 'plan', attributes: ['title'] },
       ],
+
+      limit: perPage,
+      offset: (page - 1) * perPage,
     });
 
     return res.json(registrations);
