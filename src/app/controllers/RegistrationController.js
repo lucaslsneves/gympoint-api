@@ -14,7 +14,7 @@ export default {
   async index(req, res) {
     const { page = 1, perPage = 10, name = '' } = req.query;
 
-    const registrations = await Registration.findAll({
+    const registrations = await Registration.findAndCountAll({
       where: {
         '$student.name$': {
           [Op.iLike]: `%${name}%`,
@@ -29,7 +29,15 @@ export default {
       offset: (page - 1) * perPage,
     });
 
-    return res.json(registrations);
+    const totalPages = Math.ceil(registrations.count / perPage);
+
+    return res.json({
+      data: registrations.rows,
+      total: registrations.count,
+      currentPage: page,
+      perPage,
+      totalPages,
+    });
   },
 
   async store(req, res) {

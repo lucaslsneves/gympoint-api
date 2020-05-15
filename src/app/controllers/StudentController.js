@@ -1,7 +1,32 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 import Student from '../models/Student';
 
 export default {
+  async index(req, res) {
+    const { page = 1, perPage = 10, name = '' } = req.query;
+
+    const students = await Student.findAndCountAll({
+      where: {
+        name: {
+          [Op.iLike]: `%${name}%`,
+        },
+      },
+      limit: perPage,
+      offset: (page - 1) * perPage,
+    });
+
+    const totalPages = Math.ceil(students.count / perPage);
+
+    return res.json({
+      data: students.rows,
+      total: students.count,
+      currentPage: page,
+      perPage,
+      totalPages,
+    });
+  },
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
