@@ -24,7 +24,12 @@ export default {
 
       return res.json(registration);
     }
-    const registrations = await Registration.findAll();
+    const registrations = await Registration.findAll({
+      include: [
+        { model: Student, as: 'student', attributes: ['name'] },
+        { model: Plan, as: 'plan', attributes: ['title'] },
+      ],
+    });
 
     return res.json(registrations);
   },
