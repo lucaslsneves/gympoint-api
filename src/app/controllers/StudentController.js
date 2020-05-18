@@ -111,7 +111,7 @@ export default {
 
       await student.destroy();
 
-      return res.status(200).json({});
+      return res.json();
     } catch (error) {
       return res.status(400).json({ error });
     }
