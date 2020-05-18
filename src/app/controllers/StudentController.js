@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { Op } from 'sequelize';
+import Registration from '../models/Registration';
 import Student from '../models/Student';
 
 export default {
@@ -14,12 +15,27 @@ export default {
       },
       limit: perPage,
       offset: (page - 1) * perPage,
+      order: [['created_at', 'DESC']],
     });
 
     const totalPages = Math.ceil(students.count / perPage);
 
+    // Check if the student have a Registration
+
+    const promises = await Promise.all(
+      students.rows.map((student) =>
+        Registration.findOne({ where: { student_id: student.id } })
+      )
+    );
+
+    const data = students.rows.map((student, i) =>
+      promises[i]
+        ? { ...student.dataValues, delete: false }
+        : { ...student.dataValues, delete: true }
+    );
+
     return res.json({
-      data: students.rows,
+      data,
       total: students.count,
       currentPage: page,
       perPage,
