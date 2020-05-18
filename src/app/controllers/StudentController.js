@@ -5,7 +5,17 @@ import Student from '../models/Student';
 
 export default {
   async index(req, res) {
-    const { page = 1, perPage = 10, name = '' } = req.query;
+    const { page = 1, perPage = 10, name = '', id } = req.query;
+
+    if (id) {
+      const student = await Student.findByPk(id);
+
+      if (!student) {
+        return res.status(400).json({ error: 'This student doesnt exists' });
+      }
+
+      return res.json(student);
+    }
 
     const students = await Student.findAndCountAll({
       where: {
