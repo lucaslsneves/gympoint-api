@@ -82,4 +82,22 @@ export default {
       return res.json({ error: 'Invalid id' });
     }
   },
+
+  async delete(req, res) {
+    try {
+      const { id } = req.params;
+
+      const student = await Student.findByPk(id);
+
+      if (!student) {
+        return res.status(401).json({ error: 'This student doesnt exists' });
+      }
+
+      await student.destroy();
+
+      return res.status(200).json({});
+    } catch (error) {
+      return res.status(400).json({ error });
+    }
+  },
 };
