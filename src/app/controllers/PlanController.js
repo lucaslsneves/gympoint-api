@@ -4,7 +4,7 @@ import Plan from '../models/Plan';
 
 export default {
   async index(req, res) {
-    const { id } = req.query;
+    const { page = 1, perPage = 10, id } = req.query;
 
     if (id) {
       const plan = await Plan.findByPk(id);
@@ -15,9 +15,25 @@ export default {
 
       return res.json(plan);
     }
-    const plans = await Plan.findAll();
 
-    return res.json(plans);
+    const plans = await Plan.findAndCountAll({
+      where: {
+        canceled_at: null,
+      },
+      limit: perPage,
+      offset: (page - 1) * perPage,
+      order: [['created_at', 'DESC']],
+    });
+
+    const totalPages = Math.ceil(plans.count / perPage);
+
+    return res.json({
+      data: plans.rows,
+      total: plans.count,
+      currentPage: page,
+      perPage,
+      totalPages,
+    });
   },
 
   async store(req, res) {
