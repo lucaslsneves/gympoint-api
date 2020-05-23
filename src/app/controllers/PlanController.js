@@ -79,6 +79,7 @@ export default {
       title: Yup.string(),
       duration: Yup.number().positive().integer(),
       price: Yup.number().positive(),
+      canceled_at: Yup.date(),
     });
 
     if (!(await schema.isValid(req.body))) {
