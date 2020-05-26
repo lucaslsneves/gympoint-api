@@ -62,12 +62,6 @@ export default {
   },
 
   async update(req, res) {
-    const keys = Object.entries(req.body);
-
-    if (!keys.length) {
-      return res.json({ error: 'You need to change at least 1 field' });
-    }
-
     const { id } = req.params;
 
     const plan = await Plan.findByPk(id);
@@ -85,6 +79,21 @@ export default {
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Validation fails' });
+    }
+
+    const titleExist = await Plan.findOne({
+      where: {
+        title: req.body.title,
+        id: {
+          [Op.ne]: plan.id,
+        },
+      },
+    });
+
+    if (titleExist) {
+      return res
+        .status(400)
+        .json({ error: 'This title is already being used' });
     }
 
     await plan.update(req.body);

@@ -101,6 +101,19 @@ export default {
         return res.status(400).json({ error: 'Validation Fails' });
       }
 
+      const emailExists = await Student.findOne({
+        where: {
+          email: req.body.email,
+          id: {
+            [Op.ne]: student.id,
+          },
+        },
+      });
+
+      if (emailExists) {
+        return res.status(400).json({ error: 'This email already exists' });
+      }
+
       await student.update(req.body);
 
       return res.json(student);
