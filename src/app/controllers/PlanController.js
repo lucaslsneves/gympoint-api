@@ -5,7 +5,7 @@ import Plan from '../models/Plan';
 
 export default {
   async index(req, res) {
-    const { page = 1, perPage = 10, id } = req.query;
+    const { page = 1, perPage = 10, id, title = '' } = req.query;
 
     if (id) {
       const plan = await Plan.findByPk(id);
@@ -20,6 +20,9 @@ export default {
     const plans = await Plan.findAndCountAll({
       where: {
         canceled_at: null,
+        title: {
+          [Op.iLike]: `%${title}%`,
+        },
       },
       limit: perPage,
       offset: (page - 1) * perPage,
